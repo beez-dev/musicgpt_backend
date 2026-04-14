@@ -14,11 +14,17 @@ export type UserWithRefreshHash = {
   hashedRefreshToken: string | null;
 };
 
+export type UserSubscription = {
+  id: string;
+  subscriptionStatus: 'FREE' | 'PAID';
+};
+
 export interface IUserRepository {
   findById(id: string): Promise<IUser | null>;
   findByEmail(email: string): Promise<UserPublic | null>;
   findByEmailWithPassword(email: string): Promise<UserWithPassword | null>;
   findByIdWithRefreshHash(id: string): Promise<UserWithRefreshHash | null>;
+  findByIdWithSubscription(id: string): Promise<UserSubscription | null>;
   createUser(data: {
     email: string;
     password: string;

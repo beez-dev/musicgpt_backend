@@ -1,6 +1,5 @@
 /* Prisma client queries are fully typed at compile time; ESLint does not always infer delegates from `extends PrismaClient`. */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment -- PrismaService query results */
-/* eslint-disable @typescript-eslint/no-unsafe-return -- PrismaService query results */
+
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../../../infrastructure/prisma.service';
 import {
@@ -8,6 +7,7 @@ import {
   UserPublic,
   UserWithPassword,
   UserWithRefreshHash,
+  UserSubscription,
 } from '../../domain/respositories/user.repository.interface';
 import { IUser } from '../../domain/entities/user.entity.interface';
 
@@ -18,7 +18,7 @@ export class UserRepository implements IUserRepository {
   async findById(id: string): Promise<IUser | null> {
     const row = await this.prisma.user.findUnique({
       where: { id },
-      select: { id: true },
+      select: { id: true, subscriptionStatus: true },
     });
     return row;
   }
@@ -50,6 +50,13 @@ export class UserRepository implements IUserRepository {
     return this.prisma.user.findUnique({
       where: { id },
       select: { id: true, email: true, hashedRefreshToken: true },
+    });
+  }
+
+  async findByIdWithSubscription(id: string): Promise<UserSubscription | null> {
+    return this.prisma.user.findUnique({
+      where: { id },
+      select: { id: true, subscriptionStatus: true },
     });
   }
 
