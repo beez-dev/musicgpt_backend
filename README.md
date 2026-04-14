@@ -25,6 +25,24 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+## Authentication
+
+### Endpoints
+
+- `POST /auth/register` — body: `email`, `password`, `displayName`; returns `{ accessToken, refreshToken }`.
+- `POST /auth/login` — body: `email`, `password`; returns tokens.
+- `POST /auth/refresh` — header `Authorization: Bearer <refresh_jwt>` (use the **refresh** token, not the access token); returns new tokens (**refresh rotation**).
+- `POST /auth/logout` — header `Authorization: Bearer <access_jwt>`; clears the stored refresh hash (`204 No Content`).
+
+OpenAPI / Swagger UI: **`/api`**.
+
+### Token invalidation strategy
+
+- **Access tokens** are short-lived JWTs verified with `JWT_ACCESS_SECRET`. They are not centrally revoked; compromise is limited by TTL.
+- **Refresh tokens** are JWTs signed with `JWT_REFRESH_SECRET`, but the server only stores an **Argon2 hash** of the current refresh token on the user row. On each successful login, register, or refresh, that hash is replaced with a hash of the newly issued refresh token (**rotation**). **Logout** sets the hash to `null`, so any previously issued refresh JWT fails the Argon2 check even if the JWT has not expired yet.
+
+Copy `.env.example` to `.env` and set strong, distinct values for both JWT secrets. Apply migrations with `bunx prisma migrate dev` (local) or `bunx prisma migrate deploy` (CI/production). After changing `schema.prisma`, run `bunx prisma migrate dev --name <description>` so Prisma generates the next migration for you.
+
 ## Project setup
 
 ```bash

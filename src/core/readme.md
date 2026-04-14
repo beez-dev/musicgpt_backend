@@ -1,0 +1,1 @@
+App wide abstractions or shared domains
