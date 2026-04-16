@@ -24,6 +24,7 @@ import {
           port,
           db,
           password,
+          maxRetriesPerRequest: null,
         });
       },
     },

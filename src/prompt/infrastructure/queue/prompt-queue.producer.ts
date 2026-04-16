@@ -27,4 +27,19 @@ export class PromptQueueProducer {
     );
     return { jobId: job.id, queueName: this.promptQueue.name, priority };
   }
+
+  async enqueuePromptGenerationIfMissing(payload: PromptGenerationJob) {
+    const existing = await this.promptQueue.getJob(payload.promptId);
+    if (existing) {
+      return {
+        jobId: existing.id,
+        queueName: this.promptQueue.name,
+        priority: payload.subscriptionStatus === 'PAID' ? 1 : 5,
+        alreadyQueued: true,
+      };
+    }
+
+    const created = await this.enqueuePromptGeneration(payload);
+    return { ...created, alreadyQueued: false };
+  }
 }
