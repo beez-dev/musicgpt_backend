@@ -1,6 +1,7 @@
 /* Prisma client queries are fully typed at compile time; ESLint does not always infer delegates from `extends PrismaClient`. */
 
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '../../../../infrastructure/generated/prisma/client';
 import { PrismaService } from '../../../../infrastructure/prisma.service';
 import {
   IUserRepository,
@@ -83,5 +84,26 @@ export class UserRepository implements IUserRepository {
       where: { id: userId },
       data: { hashedRefreshToken },
     });
+  }
+
+  async updateSubscriptionStatus(
+    userId: string,
+    subscriptionStatus: 'FREE' | 'PAID',
+  ): Promise<UserSubscription | null> {
+    try {
+      return await this.prisma.user.update({
+        where: { id: userId },
+        data: { subscriptionStatus },
+        select: { id: true, subscriptionStatus: true },
+      });
+    } catch (e) {
+      if (
+        e instanceof Prisma.PrismaClientKnownRequestError &&
+        e.code === 'P2025'
+      ) {
+        return null;
+      }
+      throw e;
+    }
   }
 }

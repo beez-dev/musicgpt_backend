@@ -6,6 +6,7 @@ import { QueueModule } from './infrastructure/queue.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { PromptModule } from './prompt/prompt.module';
+import { SubscriptionModule } from './subscription/subscription.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { PromptModule } from './prompt/prompt.module';
     UserModule,
     AuthModule,
     PromptModule,
+    SubscriptionModule,
   ],
 })
 export class AppModule {}

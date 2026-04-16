@@ -34,4 +34,8 @@ export interface IUserRepository {
     userId: string,
     hashedRefreshToken: string | null,
   ): Promise<void>;
+  updateSubscriptionStatus(
+    userId: string,
+    subscriptionStatus: 'FREE' | 'PAID',
+  ): Promise<UserSubscription | null>;
 }
