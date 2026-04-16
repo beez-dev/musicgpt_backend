@@ -63,15 +63,17 @@ export class PromptRepository implements IPromptRepository {
   async createAudioForPrompt(data: {
     promptId: string;
     userId: string;
-  }): Promise<void> {
+  }): Promise<{ id: string; url: string }> {
     const suffix = data.promptId.slice(0, 8); // take initial letters from prompt as title for generation
-    await this.prisma.audio.create({
+    const audio = await this.prisma.audio.create({
       data: {
         promptId: data.promptId,
         userId: data.userId,
         title: `Generated track ${suffix})`,
         url: `https://cdn.musicgpt.local/audio/${data.promptId}.mp3`,
       },
+      select: { id: true, url: true },
     });
+    return audio;
   }
 }

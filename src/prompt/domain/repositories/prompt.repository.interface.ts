@@ -16,5 +16,5 @@ export interface IPromptRepository {
   createAudioForPrompt(data: {
     promptId: string;
     userId: string;
-  }): Promise<void>;
+  }): Promise<{ id: string; url: string }>;
 }

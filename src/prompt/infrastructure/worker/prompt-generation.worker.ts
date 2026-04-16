@@ -13,6 +13,7 @@ import {
   QUEUE_CONNECTION,
 } from '../../../common/queue/queue.constants';
 import { PromptRepository } from '../repository/prompt.repository';
+import { PromptEventsGateway } from '../websockets/prompt-events.gateway';
 
 @Injectable()
 export class PromptGenerationWorker implements OnModuleInit, OnModuleDestroy {
@@ -23,6 +24,7 @@ export class PromptGenerationWorker implements OnModuleInit, OnModuleDestroy {
     @Inject(QUEUE_CONNECTION)
     private readonly connection: IORedis,
     private readonly promptRepository: PromptRepository,
+    private readonly promptEventsGateway: PromptEventsGateway,
   ) {}
 
   onModuleInit() {
@@ -33,11 +35,16 @@ export class PromptGenerationWorker implements OnModuleInit, OnModuleDestroy {
         try {
           await this.promptRepository.markPromptStatus(promptId, 'PROCESSING');
           await this.simulateGenerationDelay();
-          await this.promptRepository.createAudioForPrompt({
+          const audio = await this.promptRepository.createAudioForPrompt({
             promptId,
             userId,
           });
           await this.promptRepository.markPromptStatus(promptId, 'COMPLETED');
+          this.promptEventsGateway.notifyPromptCompleted(userId, {
+            promptId,
+            audioId: audio.id,
+            audioUrl: audio.url,
+          });
         } catch (error) {
           await this.promptRepository.markPromptStatus(promptId, 'PENDING');
           throw error;
