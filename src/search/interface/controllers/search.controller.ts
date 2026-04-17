@@ -15,7 +15,7 @@ export class SearchController {
   @ApiOperation({
     summary: 'Unified search (users + audio)',
     description:
-      'Stage 1: ILIKE-weighted user match on email/display_name; full-text rank on audio title.',
+      'Paged unified search: optional integer `users_offset` / `audio_offset` (rows to skip in each ranked list). Response `meta.next_offset` is the offset to pass on the next page, or null. Same `q` when advancing pages.',
   })
   search(@Query() query: SearchQueryDto) {
     return this.searchService.search(query);
