@@ -14,11 +14,12 @@ NestJS API for user accounts, JWT authentication, **simulated** music prompt gen
 6. [Token rotation and invalidation](#token-rotation--invalidation-strategy)  
 7. [Job queue processing flow](#job-queue-processing-flow)  
 8. [Cron scheduler](#cron-scheduler-explanation)  
-9. [Cache strategy and invalidation](#cache-strategy--invalidation-rules)  
-10. [Rate limit logic](#rate-limit-logic)  
-11. [Unified search ranking](#unified-search-ranking-logic)  
-12. [Subscription perks](#subscription-perks-logic)  
-13. [API documentation (Swagger)](#api-documentation-swagger)  
+9. [WebSocket: prompt completion updates](#websocket-prompt-completion-updates)  
+10. [Cache strategy and invalidation](#cache-strategy--invalidation-rules)  
+11. [Rate limit logic](#rate-limit-logic)  
+12. [Unified search ranking](#unified-search-ranking-logic)  
+13. [Subscription perks](#subscription-perks-logic)  
+14. [API documentation (Swagger)](#api-documentation-swagger)  
 
 ---
 
@@ -337,6 +338,63 @@ Prompt “generation” is **simulated**: no external ML API. Work is queued in 
 - `POST /prompts` only inserts a **`PENDING`** row and returns immediately (with a small `queue` stub in the JSON response).  
 - The **cron** bridges the database state to **BullMQ** without blocking the HTTP request.  
 - The **worker** performs the long-running simulation and notifications.
+
+---
+
+## WebSocket: prompt completion updates
+
+Realtime updates use **Socket.IO** on the **same port** as the Nest HTTP server (no separate WebSocket port). The gateway is `PromptEventsGateway` (`@WebSocketGateway()` — **default namespace `/`**, default Socket.IO path **`/socket.io/`**).
+
+### URL and transport
+
+| How you run | Connect with `socket.io-client` | Typical WebSocket URL in DevTools |
+|-------------|----------------------------------|-----------------------------------|
+| **Local** (default `PORT=3000` in `.env.example`) | `http://localhost:3000` | `ws://localhost:3000/socket.io/?EIO=4&transport=websocket&…` |
+| **Docker Compose** (`PORT=5001` in `docker-compose.yml`) | `http://localhost:5001` | `ws://localhost:5001/socket.io/?…` |
+
+Use the **HTTP** origin with the Socket.IO client (`io('http://localhost:3000', { ... })`); the library negotiates an Engine.IO session and upgrades to a **WebSocket** (`ws://…`) when possible. If you configure a custom `PORT`, replace **3000** / **5001** accordingly.
+
+### Authentication
+
+The server accepts the **access** JWT (same as REST `Authorization: Bearer <access>`), either:
+
+- **`auth.token`** on the handshake (`io(url, { auth: { token: accessToken } })`), or  
+- Header **`Authorization: Bearer <access>`** on the handshake.
+
+Invalid or missing tokens result in an immediate disconnect. A successful connection also consumes **one unit** of the shared [subscription rate limit](#rate-limit-logic) budget (same Redis counter as guarded HTTP routes).
+
+### Event to listen for
+
+| Event | When | Payload (`prompt.completed`) |
+|-------|------|--------------------------------|
+| **`prompt.completed`** | Worker finished simulated generation and marked the prompt **COMPLETED** | `{ promptId: string, audioId: string, audioUrl: string }` |
+
+The server joins the socket to room **`user:{userId}`** (from the JWT `id` claim) before any events are emitted.
+
+### Minimal client example
+
+```javascript
+import { io } from 'socket.io-client';
+
+const accessToken = '<access JWT from login/register/refresh>';
+
+const socket = io('http://localhost:3000', {
+  auth: { token: accessToken },
+  // optional: transports: ['websocket'] to skip long-polling
+});
+
+socket.on('connect', () => {
+  console.log('connected', socket.id);
+});
+
+socket.on('prompt.completed', (payload) => {
+  console.log('Generation done:', payload);
+});
+
+socket.on('disconnect', (reason) => {
+  console.log('disconnected', reason);
+});
+```
 
 ---
 
