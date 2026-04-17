@@ -59,6 +59,41 @@ export class AudioService {
     }
   }
 
+  private async deleteByPattern(pattern: string): Promise<void> {
+    try {
+      let cursor = '0';
+      do {
+        const [nextCursor, keys] = await this.redis.scan(
+          cursor,
+          'MATCH',
+          pattern,
+          'COUNT',
+          '100',
+        );
+        cursor = nextCursor;
+        if (keys.length) {
+          await this.redis.del(...keys);
+        }
+      } while (cursor !== '0');
+    } catch (e) {
+      this.logger.warn(
+        `Audio cache invalidation failed for ${pattern}: ${(e as Error).message}`,
+      );
+    }
+  }
+
+  private async invalidateAudioCaches(audioId: string): Promise<void> {
+    try {
+      await this.redis.del(this.itemCacheKey(audioId));
+    } catch (e) {
+      this.logger.warn(
+        `Audio cache invalidation failed for item ${audioId}: ${(e as Error).message}`,
+      );
+    }
+
+    await this.deleteByPattern('cache:audio:list:*');
+  }
+
   async listAudio(query: PaginatedQueryDto) {
     const cacheKey = this.listCacheKey(query.page, query.limit);
     const cached = await this.getCachedJson<{
@@ -130,6 +165,7 @@ export class AudioService {
     if (!audio) {
       throw new NotFoundException('Audio not found');
     }
+    await this.invalidateAudioCaches(id);
     return audio;
   }
 }

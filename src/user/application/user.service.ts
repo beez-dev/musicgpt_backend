@@ -55,6 +55,40 @@ export class UserService {
     }
   }
 
+  private async deleteByPattern(pattern: string): Promise<void> {
+    try {
+      let cursor = '0';
+      do {
+        const [nextCursor, keys] = await this.redis.scan(
+          cursor,
+          'MATCH',
+          pattern,
+          'COUNT',
+          '100',
+        );
+        cursor = nextCursor;
+        if (keys.length) {
+          await this.redis.del(...keys);
+        }
+      } while (cursor !== '0');
+    } catch (e) {
+      this.logger.warn(
+        `User cache invalidation failed for ${pattern}: ${(e as Error).message}`,
+      );
+    }
+  }
+
+  private async invalidateUserCaches(userId: string): Promise<void> {
+    try {
+      await this.redis.del(this.itemCacheKey(userId));
+    } catch (e) {
+      this.logger.warn(
+        `User cache invalidation failed for item ${userId}: ${(e as Error).message}`,
+      );
+    }
+    await this.deleteByPattern('cache:users:list:*');
+  }
+
   async listUsers(query: PaginatedQueryDto) {
     const cacheKey = this.listCacheKey(query.page, query.limit);
     const cached = await this.getCachedJson<{
@@ -117,6 +151,7 @@ export class UserService {
     if (!user) {
       throw new NotFoundException('User not found');
     }
+    await this.invalidateUserCaches(id);
     return user;
   }
 }
