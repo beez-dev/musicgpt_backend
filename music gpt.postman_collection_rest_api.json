@@ -1,0 +1,981 @@
+{
+  "info": {
+    "_postman_id": "08307481-02ed-4b60-a4d5-1dbfe3a925b1",
+    "name": "music gpt",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "15546550",
+    "_collection_link": "https://go.postman.co/collection/15546550-08307481-02ed-4b60-a4d5-1dbfe3a925b1?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "register",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": [
+        {
+          "name": "register",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"bza@gmail.com\",\n    \"password\": \"abcdef@123\", \n    \"displayName\": \"bzal\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/auth/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "474"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"1da-vjBRYH2FQ9hGXCgCTxJPaFkp7Sc\""
+            },
+            {
+              "key": "Date",
+              "value": "Tue, 14 Apr 2026 08:14:21 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFkMzQxNTM2LTdjMzMtNDJmMi04ZTA5LTllZjQ4OTg5YmZiNyIsImVtYWlsIjoiYnphQGdtYWlsLmNvbSIsImlhdCI6MTc3NjE1NDQ2MSwiZXhwIjoxNzc2MTU1MzYxfQ.GLSJ2ku1cgu39VeBG16S2rUYdD7lyKrPmMXIIjyhg0M\",\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFkMzQxNTM2LTdjMzMtNDJmMi04ZTA5LTllZjQ4OTg5YmZiNyIsImVtYWlsIjoiYnphQGdtYWlsLmNvbSIsImlhdCI6MTc3NjE1NDQ2MSwiZXhwIjoxNzc2NzU5MjYxfQ.W1QNfCntnnRzSGEo75_OIu-68O3QY3-XaSN3Nbhemvo\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\": \"bza@gmail.com\",\n    \"password\": \"abcdef@123\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/auth/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "login",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"bza@gmail.com\",\n    \"password\": \"abcdef@123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "474"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"1da-oEgqWDkc19nPxFNRTTXB9hebaGo\""
+            },
+            {
+              "key": "Date",
+              "value": "Tue, 14 Apr 2026 08:22:15 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFkMzQxNTM2LTdjMzMtNDJmMi04ZTA5LTllZjQ4OTg5YmZiNyIsImVtYWlsIjoiYnphQGdtYWlsLmNvbSIsImlhdCI6MTc3NjE1NDkzNSwiZXhwIjoxNzc2MTU1ODM1fQ.M4XrBB2P7JfBXCVyIp9eumWnu-oU4plXceNHs5At494\",\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFkMzQxNTM2LTdjMzMtNDJmMi04ZTA5LTllZjQ4OTg5YmZiNyIsImVtYWlsIjoiYnphQGdtYWlsLmNvbSIsImlhdCI6MTc3NjE1NDkzNSwiZXhwIjoxNzc2NzU5NzM1fQ.IUY0XTdAnrVK3YgNbiALLWuOR0eqa74aqlGtbURKrxU\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "prompts",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFkMzQxNTM2LTdjMzMtNDJmMi04ZTA5LTllZjQ4OTg5YmZiNyIsImVtYWlsIjoiYnphQGdtYWlsLmNvbSIsImlhdCI6MTc3NjE3MTYzMiwiZXhwIjoxNzc2MTcyNTMyfQ.5wxKLgilVYC_l3OcQctC4wSmmERVCL5Cb7CkStY_OLE",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"text\": \"Create a afro beat music\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/prompts",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "prompts"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "prompts",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFkMzQxNTM2LTdjMzMtNDJmMi04ZTA5LTllZjQ4OTg5YmZiNyIsImVtYWlsIjoiYnphQGdtYWlsLmNvbSIsImlhdCI6MTc3NjM1NTQxMCwiZXhwIjoxNzc2MzU2MzEwfQ.nOPYcAddvMSgPuq9bDHDO4MqzlZuhzqSNMsu4Q7-56Y",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"text\": \"Create a afro beat music\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/prompts",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "prompts"
+              ]
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "339"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"153-LoREwUF9ZIaz1Ce0OVYeHaiGXJw\""
+            },
+            {
+              "key": "Date",
+              "value": "Tue, 14 Apr 2026 13:01:09 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"id\": \"beec3f03-3e75-452d-9aba-2de74ae2c700\",\n    \"userId\": \"ad341536-7c33-42f2-8e09-9ef48989bfb7\",\n    \"text\": \"Create a afro beat music\",\n    \"status\": \"PENDING\",\n    \"createdAt\": \"2026-04-14T13:01:09.398Z\",\n    \"updatedAt\": \"2026-04-14T13:01:09.398Z\",\n    \"queue\": {\n        \"queued\": true,\n        \"jobId\": \"beec3f03-3e75-452d-9aba-2de74ae2c700\",\n        \"queueName\": \"MUSIC_GENERATION\",\n        \"priority\": 5\n    }\n}"
+        }
+      ]
+    },
+    {
+      "name": "audio",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFkMzQxNTM2LTdjMzMtNDJmMi04ZTA5LTllZjQ4OTg5YmZiNyIsImVtYWlsIjoiYnphQGdtYWlsLmNvbSIsImlhdCI6MTc3NjE3MTYzMiwiZXhwIjoxNzc2MTcyNTMyfQ.5wxKLgilVYC_l3OcQctC4wSmmERVCL5Cb7CkStY_OLE",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"text\": \"Create a afro beat music\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/audio?page=1&limit=5",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "audio"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "key": "limit",
+              "value": "5"
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "audio",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFkMzQxNTM2LTdjMzMtNDJmMi04ZTA5LTllZjQ4OTg5YmZiNyIsImVtYWlsIjoiYnphQGdtYWlsLmNvbSIsImlhdCI6MTc3NjE3MTYzMiwiZXhwIjoxNzc2MTcyNTMyfQ.5wxKLgilVYC_l3OcQctC4wSmmERVCL5Cb7CkStY_OLE",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"text\": \"Create a afro beat music\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/audio?page=1&limit=5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "audio"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "1380"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"564-29sHr/YkJJYFZ0AgVm6yOFTfNGM\""
+            },
+            {
+              "key": "Date",
+              "value": "Fri, 17 Apr 2026 09:36:47 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"data\": [\n        {\n            \"id\": \"586ae107-1e86-4d5b-a3f3-87daee6bfe3a\",\n            \"promptId\": \"f5740b8d-a861-42d0-b39e-dd03d43c682b\",\n            \"userId\": \"9864283c-27fa-44ff-a7ca-81a68963ac94\",\n            \"title\": \"Generated Track 3\",\n            \"url\": \"https://cdn.musicgpt.local/audio/sample-3.mp3\",\n            \"createdAt\": \"2026-04-17T09:13:57.853Z\"\n        },\n        {\n            \"id\": \"7de2b415-8a7a-4f6f-b2ba-51cc2143f661\",\n            \"promptId\": \"fd00b00f-0762-4e42-8eac-118b053c512e\",\n            \"userId\": \"bc4fd77c-71b4-4b19-be78-5f1e82055db0\",\n            \"title\": \"Generated Track 4\",\n            \"url\": \"https://cdn.musicgpt.local/audio/sample-4.mp3\",\n            \"createdAt\": \"2026-04-17T09:13:57.853Z\"\n        },\n        {\n            \"id\": \"bb15b231-8a57-4d9b-b3bd-98315596b9cc\",\n            \"promptId\": \"e2d9e394-fc79-4a16-ab84-5056eb1aef1c\",\n            \"userId\": \"89e562ed-fed1-4bb0-89e3-b0332d2ff48b\",\n            \"title\": \"Generated Track 2\",\n            \"url\": \"https://cdn.musicgpt.local/audio/sample-2.mp3\",\n            \"createdAt\": \"2026-04-17T09:13:57.853Z\"\n        },\n        {\n            \"id\": \"9b2f39b4-a41d-4fda-97bc-f67b80336c02\",\n            \"promptId\": \"27917138-e5e8-4160-a842-4297261ef210\",\n            \"userId\": \"498304fd-4c08-47e0-ac0f-90e4feea500f\",\n            \"title\": \"Generated Track 1\",\n            \"url\": \"https://cdn.musicgpt.local/audio/sample-1.mp3\",\n            \"createdAt\": \"2026-04-17T09:13:57.853Z\"\n        },\n        {\n            \"id\": \"e6e06d8d-0b25-477f-ba04-d90501d56747\",\n            \"promptId\": \"007fc85a-9245-46b6-b0c2-0e55149c6aa8\",\n            \"userId\": \"7c05d8f4-d574-44ef-9897-77bd82f2ec2a\",\n            \"title\": \"Generated Track 5\",\n            \"url\": \"https://cdn.musicgpt.local/audio/sample-5.mp3\",\n            \"createdAt\": \"2026-04-17T09:13:57.853Z\"\n        }\n    ],\n    \"total\": 37,\n    \"page\": 1,\n    \"limit\": 5,\n    \"totalPages\": 8\n}"
+        }
+      ]
+    },
+    {
+      "name": "users",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFkMzQxNTM2LTdjMzMtNDJmMi04ZTA5LTllZjQ4OTg5YmZiNyIsImVtYWlsIjoiYnphQGdtYWlsLmNvbSIsImlhdCI6MTc3NjQyNDgxNywiZXhwIjoxNzc2NDI1NzE3fQ.9suuNBljCjvg8qI1hhUDAZSvNgRIuM4kUAo-kD0lTAc",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"text\": \"Create a afro beat music\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/users?page=1&limit=5",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "users"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "key": "limit",
+              "value": "5"
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "audio",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFkMzQxNTM2LTdjMzMtNDJmMi04ZTA5LTllZjQ4OTg5YmZiNyIsImVtYWlsIjoiYnphQGdtYWlsLmNvbSIsImlhdCI6MTc3NjE3MTYzMiwiZXhwIjoxNzc2MTcyNTMyfQ.5wxKLgilVYC_l3OcQctC4wSmmERVCL5Cb7CkStY_OLE",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"text\": \"Create a afro beat music\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/audio?page=1&limit=5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "audio"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "1380"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"564-29sHr/YkJJYFZ0AgVm6yOFTfNGM\""
+            },
+            {
+              "key": "Date",
+              "value": "Fri, 17 Apr 2026 09:36:47 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"data\": [\n        {\n            \"id\": \"586ae107-1e86-4d5b-a3f3-87daee6bfe3a\",\n            \"promptId\": \"f5740b8d-a861-42d0-b39e-dd03d43c682b\",\n            \"userId\": \"9864283c-27fa-44ff-a7ca-81a68963ac94\",\n            \"title\": \"Generated Track 3\",\n            \"url\": \"https://cdn.musicgpt.local/audio/sample-3.mp3\",\n            \"createdAt\": \"2026-04-17T09:13:57.853Z\"\n        },\n        {\n            \"id\": \"7de2b415-8a7a-4f6f-b2ba-51cc2143f661\",\n            \"promptId\": \"fd00b00f-0762-4e42-8eac-118b053c512e\",\n            \"userId\": \"bc4fd77c-71b4-4b19-be78-5f1e82055db0\",\n            \"title\": \"Generated Track 4\",\n            \"url\": \"https://cdn.musicgpt.local/audio/sample-4.mp3\",\n            \"createdAt\": \"2026-04-17T09:13:57.853Z\"\n        },\n        {\n            \"id\": \"bb15b231-8a57-4d9b-b3bd-98315596b9cc\",\n            \"promptId\": \"e2d9e394-fc79-4a16-ab84-5056eb1aef1c\",\n            \"userId\": \"89e562ed-fed1-4bb0-89e3-b0332d2ff48b\",\n            \"title\": \"Generated Track 2\",\n            \"url\": \"https://cdn.musicgpt.local/audio/sample-2.mp3\",\n            \"createdAt\": \"2026-04-17T09:13:57.853Z\"\n        },\n        {\n            \"id\": \"9b2f39b4-a41d-4fda-97bc-f67b80336c02\",\n            \"promptId\": \"27917138-e5e8-4160-a842-4297261ef210\",\n            \"userId\": \"498304fd-4c08-47e0-ac0f-90e4feea500f\",\n            \"title\": \"Generated Track 1\",\n            \"url\": \"https://cdn.musicgpt.local/audio/sample-1.mp3\",\n            \"createdAt\": \"2026-04-17T09:13:57.853Z\"\n        },\n        {\n            \"id\": \"e6e06d8d-0b25-477f-ba04-d90501d56747\",\n            \"promptId\": \"007fc85a-9245-46b6-b0c2-0e55149c6aa8\",\n            \"userId\": \"7c05d8f4-d574-44ef-9897-77bd82f2ec2a\",\n            \"title\": \"Generated Track 5\",\n            \"url\": \"https://cdn.musicgpt.local/audio/sample-5.mp3\",\n            \"createdAt\": \"2026-04-17T09:13:57.853Z\"\n        }\n    ],\n    \"total\": 37,\n    \"page\": 1,\n    \"limit\": 5,\n    \"totalPages\": 8\n}"
+        }
+      ]
+    },
+    {
+      "name": "users/:id",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFkMzQxNTM2LTdjMzMtNDJmMi04ZTA5LTllZjQ4OTg5YmZiNyIsImVtYWlsIjoiYnphQGdtYWlsLmNvbSIsImlhdCI6MTc3NjQyNDgxNywiZXhwIjoxNzc2NDI1NzE3fQ.9suuNBljCjvg8qI1hhUDAZSvNgRIuM4kUAo-kD0lTAc",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"displayName\": \"myUserName\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/users/bc4fd77c-71b4-4b19-be78-5f1e82055db0",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "users",
+            "bc4fd77c-71b4-4b19-be78-5f1e82055db0"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "users/:id",
+          "originalRequest": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFkMzQxNTM2LTdjMzMtNDJmMi04ZTA5LTllZjQ4OTg5YmZiNyIsImVtYWlsIjoiYnphQGdtYWlsLmNvbSIsImlhdCI6MTc3NjQyNDgxNywiZXhwIjoxNzc2NDI1NzE3fQ.9suuNBljCjvg8qI1hhUDAZSvNgRIuM4kUAo-kD0lTAc",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"displayName\": \"myUserName\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/users/ad341536-7c33-42f2-8e09-9ef48989bfb7",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "users",
+                "ad341536-7c33-42f2-8e09-9ef48989bfb7"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "118"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"76-Hy1Vs/W2++cEoyUPYZ2Gh3Gheac\""
+            },
+            {
+              "key": "Date",
+              "value": "Fri, 17 Apr 2026 11:25:07 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"id\": \"ad341536-7c33-42f2-8e09-9ef48989bfb7\",\n    \"email\": \"bza@gmail.com\",\n    \"displayName\": \"bzal\",\n    \"subscriptionStatus\": \"FREE\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "audio/:id",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFkMzQxNTM2LTdjMzMtNDJmMi04ZTA5LTllZjQ4OTg5YmZiNyIsImVtYWlsIjoiYnphQGdtYWlsLmNvbSIsImlhdCI6MTc3NjE3MTYzMiwiZXhwIjoxNzc2MTcyNTMyfQ.5wxKLgilVYC_l3OcQctC4wSmmERVCL5Cb7CkStY_OLE",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"title\": \"Updated audio title\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/audio/586ae107-1e86-4d5b-a3f3-87daee6bfe3a",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "audio",
+            "586ae107-1e86-4d5b-a3f3-87daee6bfe3a"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "users/:id",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFkMzQxNTM2LTdjMzMtNDJmMi04ZTA5LTllZjQ4OTg5YmZiNyIsImVtYWlsIjoiYnphQGdtYWlsLmNvbSIsImlhdCI6MTc3NjQyNDgxNywiZXhwIjoxNzc2NDI1NzE3fQ.9suuNBljCjvg8qI1hhUDAZSvNgRIuM4kUAo-kD0lTAc",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "http://localhost:3000/users/bc4fd77c-71b4-4b19-be78-5f1e82055db0",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "users",
+            "bc4fd77c-71b4-4b19-be78-5f1e82055db0"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "users/:id",
+          "originalRequest": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFkMzQxNTM2LTdjMzMtNDJmMi04ZTA5LTllZjQ4OTg5YmZiNyIsImVtYWlsIjoiYnphQGdtYWlsLmNvbSIsImlhdCI6MTc3NjQyNDgxNywiZXhwIjoxNzc2NDI1NzE3fQ.9suuNBljCjvg8qI1hhUDAZSvNgRIuM4kUAo-kD0lTAc",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"displayName\": \"myUserName\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/users/ad341536-7c33-42f2-8e09-9ef48989bfb7",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "users",
+                "ad341536-7c33-42f2-8e09-9ef48989bfb7"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "118"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"76-Hy1Vs/W2++cEoyUPYZ2Gh3Gheac\""
+            },
+            {
+              "key": "Date",
+              "value": "Fri, 17 Apr 2026 11:25:07 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"id\": \"ad341536-7c33-42f2-8e09-9ef48989bfb7\",\n    \"email\": \"bza@gmail.com\",\n    \"displayName\": \"bzal\",\n    \"subscriptionStatus\": \"FREE\"\n}"
+        },
+        {
+          "name": "users/:id",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFkMzQxNTM2LTdjMzMtNDJmMi04ZTA5LTllZjQ4OTg5YmZiNyIsImVtYWlsIjoiYnphQGdtYWlsLmNvbSIsImlhdCI6MTc3NjQyNDgxNywiZXhwIjoxNzc2NDI1NzE3fQ.9suuNBljCjvg8qI1hhUDAZSvNgRIuM4kUAo-kD0lTAc",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://localhost:3000/users/bc4fd77c-71b4-4b19-be78-5f1e82055db0",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "users",
+                "bc4fd77c-71b4-4b19-be78-5f1e82055db0"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "139"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"8b-XBPoZnglr6g8YcFdNBc23uLfnyo\""
+            },
+            {
+              "key": "Date",
+              "value": "Fri, 17 Apr 2026 11:26:57 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"id\": \"bc4fd77c-71b4-4b19-be78-5f1e82055db0\",\n    \"email\": \"sample.user+4@example.com\",\n    \"displayName\": \"Sample User 4\",\n    \"subscriptionStatus\": \"FREE\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "audio/:id",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFkMzQxNTM2LTdjMzMtNDJmMi04ZTA5LTllZjQ4OTg5YmZiNyIsImVtYWlsIjoiYnphQGdtYWlsLmNvbSIsImlhdCI6MTc3NjE3MTYzMiwiZXhwIjoxNzc2MTcyNTMyfQ.5wxKLgilVYC_l3OcQctC4wSmmERVCL5Cb7CkStY_OLE",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"title\": \"Updated audio title\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/audio/586ae107-1e86-4d5b-a3f3-87daee6bfe3a",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "audio",
+            "586ae107-1e86-4d5b-a3f3-87daee6bfe3a"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "audio/:id",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFkMzQxNTM2LTdjMzMtNDJmMi04ZTA5LTllZjQ4OTg5YmZiNyIsImVtYWlsIjoiYnphQGdtYWlsLmNvbSIsImlhdCI6MTc3NjE3MTYzMiwiZXhwIjoxNzc2MTcyNTMyfQ.5wxKLgilVYC_l3OcQctC4wSmmERVCL5Cb7CkStY_OLE",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"text\": \"Create a afro beat music\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/audio?page=1&limit=5",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "audio"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "key": "limit",
+              "value": "5"
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "audio/:id",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFkMzQxNTM2LTdjMzMtNDJmMi04ZTA5LTllZjQ4OTg5YmZiNyIsImVtYWlsIjoiYnphQGdtYWlsLmNvbSIsImlhdCI6MTc3NjE3MTYzMiwiZXhwIjoxNzc2MTcyNTMyfQ.5wxKLgilVYC_l3OcQctC4wSmmERVCL5Cb7CkStY_OLE",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"text\": \"Create a afro beat music\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/audio/586ae107-1e86-4d5b-a3f3-87daee6bfe3a",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "audio",
+                "586ae107-1e86-4d5b-a3f3-87daee6bfe3a"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "264"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"108-v4bzoM4fSB/SQiG4y79uDJoh3Bk\""
+            },
+            {
+              "key": "Date",
+              "value": "Fri, 17 Apr 2026 09:39:39 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"id\": \"586ae107-1e86-4d5b-a3f3-87daee6bfe3a\",\n    \"promptId\": \"f5740b8d-a861-42d0-b39e-dd03d43c682b\",\n    \"userId\": \"9864283c-27fa-44ff-a7ca-81a68963ac94\",\n    \"title\": \"Generated Track 3\",\n    \"url\": \"https://cdn.musicgpt.local/audio/sample-3.mp3\",\n    \"createdAt\": \"2026-04-17T09:13:57.853Z\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "search",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFkMzQxNTM2LTdjMzMtNDJmMi04ZTA5LTllZjQ4OTg5YmZiNyIsImVtYWlsIjoiYnphQGdtYWlsLmNvbSIsImlhdCI6MTc3NjQzOTc1MiwiZXhwIjoxNzc2NDQwNjUyfQ.Jhh1xnqLVTT4-2MXIr1iITe3RI9EjN3Y1pTj9dCDcSE",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"text\": \"Create a afro beat music\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/search?q=1&page=1&limit=5",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "search"
+          ],
+          "query": [
+            {
+              "key": "q",
+              "value": "1"
+            },
+            {
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "key": "limit",
+              "value": "5"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
