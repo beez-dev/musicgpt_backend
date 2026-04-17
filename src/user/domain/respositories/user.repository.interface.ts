@@ -1,5 +1,3 @@
-import { IUser } from '../entities/user.entity.interface';
-
 export type UserPublic = {
   id: string;
   email: string;
@@ -19,8 +17,21 @@ export type UserSubscription = {
   subscriptionStatus: 'FREE' | 'PAID';
 };
 
+export type UserSummary = {
+  id: string;
+  email: string;
+  displayName: string;
+  subscriptionStatus: 'FREE' | 'PAID';
+};
+
+export type UserPage = {
+  data: UserSummary[];
+  total: number;
+};
+
 export interface IUserRepository {
-  findById(id: string): Promise<IUser | null>;
+  findById(id: string): Promise<UserSummary | null>;
+  findPaginated(page: number, limit: number): Promise<UserPage>;
   findByEmail(email: string): Promise<UserPublic | null>;
   findByEmailWithPassword(email: string): Promise<UserWithPassword | null>;
   findByIdWithRefreshHash(id: string): Promise<UserWithRefreshHash | null>;
@@ -38,4 +49,8 @@ export interface IUserRepository {
     userId: string,
     subscriptionStatus: 'FREE' | 'PAID',
   ): Promise<UserSubscription | null>;
+  updateBasicProfile(
+    userId: string,
+    data: { displayName?: string },
+  ): Promise<UserSummary | null>;
 }

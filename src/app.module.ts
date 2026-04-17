@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { PromptModule } from './prompt/prompt.module';
 import { SubscriptionModule } from './subscription/subscription.module';
 import { RateLimitModule } from './common/rate-limit/rate-limit.module';
+import { AudioModule } from './audio/audio.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { RateLimitModule } from './common/rate-limit/rate-limit.module';
     AuthModule,
     PromptModule,
     SubscriptionModule,
+    AudioModule,
   ],
 })
 export class AppModule {}

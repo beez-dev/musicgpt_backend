@@ -5,23 +5,47 @@ import { Prisma } from '../../../../infrastructure/generated/prisma/client';
 import { PrismaService } from '../../../../infrastructure/prisma.service';
 import {
   IUserRepository,
+  UserPage,
   UserPublic,
+  UserSummary,
   UserWithPassword,
   UserWithRefreshHash,
   UserSubscription,
 } from '../../domain/respositories/user.repository.interface';
-import { IUser } from '../../domain/entities/user.entity.interface';
 
 @Injectable()
 export class UserRepository implements IUserRepository {
   constructor(private prisma: PrismaService) {}
 
-  async findById(id: string): Promise<IUser | null> {
-    const row = await this.prisma.user.findUnique({
+  async findById(id: string): Promise<UserSummary | null> {
+    return this.prisma.user.findUnique({
       where: { id },
-      select: { id: true, subscriptionStatus: true },
+      select: {
+        id: true,
+        email: true,
+        displayName: true,
+        subscriptionStatus: true,
+      },
     });
-    return row;
+  }
+
+  async findPaginated(page: number, limit: number): Promise<UserPage> {
+    const skip = (page - 1) * limit;
+    const [data, total] = await this.prisma.$transaction([
+      this.prisma.user.findMany({
+        skip,
+        take: limit,
+        orderBy: { createdAt: 'desc' },
+        select: {
+          id: true,
+          email: true,
+          displayName: true,
+          subscriptionStatus: true,
+        },
+      }),
+      this.prisma.user.count(),
+    ]);
+    return { data, total };
   }
 
   async findByEmail(email: string): Promise<UserPublic | null> {
@@ -95,6 +119,32 @@ export class UserRepository implements IUserRepository {
         where: { id: userId },
         data: { subscriptionStatus },
         select: { id: true, subscriptionStatus: true },
+      });
+    } catch (e) {
+      if (
+        e instanceof Prisma.PrismaClientKnownRequestError &&
+        e.code === 'P2025'
+      ) {
+        return null;
+      }
+      throw e;
+    }
+  }
+
+  async updateBasicProfile(
+    userId: string,
+    data: { displayName?: string },
+  ): Promise<UserSummary | null> {
+    try {
+      return await this.prisma.user.update({
+        where: { id: userId },
+        data: { displayName: data.displayName },
+        select: {
+          id: true,
+          email: true,
+          displayName: true,
+          subscriptionStatus: true,
+        },
       });
     } catch (e) {
       if (
