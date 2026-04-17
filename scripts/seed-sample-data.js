@@ -36,8 +36,8 @@ async function main() {
 
     for (const user of users) {
       await client.query(
-        `INSERT INTO users (id, email, password, display_name, subscription_status)
-         VALUES ($1, $2, $3, $4, $5::"SubscriptionStatus")`,
+        `INSERT INTO users (id, email, password, display_name, subscription_status, created_at, updated_at)
+         VALUES ($1, $2, $3, $4, $5::"SubscriptionStatus", NOW(), NOW())`,
         [
           user.id,
           user.email,
@@ -60,8 +60,8 @@ async function main() {
 
     for (const prompt of prompts) {
       await client.query(
-        `INSERT INTO prompts (id, user_id, text, status)
-         VALUES ($1, $2, $3, $4::"PromptStatus")`,
+        `INSERT INTO prompts (id, user_id, text, status, created_at, updated_at)
+         VALUES ($1, $2, $3, $4::"PromptStatus", NOW(), NOW())`,
         [prompt.id, prompt.userId, prompt.text, prompt.status],
       );
     }
@@ -79,8 +79,8 @@ async function main() {
 
     for (const audio of audios) {
       await client.query(
-        `INSERT INTO audios (id, prompt_id, user_id, title, url)
-         VALUES ($1, $2, $3, $4, $5)`,
+        `INSERT INTO audios (id, prompt_id, user_id, title, url, created_at, updated_at)
+         VALUES ($1, $2, $3, $4, $5, NOW(), NOW())`,
         [audio.id, audio.promptId, audio.userId, audio.title, audio.url],
       );
     }

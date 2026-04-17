@@ -1,0 +1,99 @@
+# Run the full stack: API + Postgres + Redis on one Docker network.
+#
+#   docker-compose up --build
+#   (Compose V2 plugin: `docker compose up --build` — same file.)
+#
+# Host ports are intentionally non-default so they are unlikely to clash with
+# local services you may already run:
+#   - API:     http://localhost:5001
+#   - Postgres: localhost:6009  (maps to 5432 inside the postgres container)
+#   - Redis:   localhost:7889  (maps to 6379 inside the redis container)
+#
+# The API connects to Postgres and Redis using Docker DNS names `postgres` and
+# `redis` on the *internal* ports (5432 / 6379). Only your machine sees 6009 / 7889.
+
+name: musicgpt
+
+networks:
+  musicgpt:
+    driver: bridge
+
+volumes:
+  # Persist database files across container restarts.
+  postgres_data: {}
+  # Optional Redis persistence (append-only file).
+  redis_data: {}
+
+services:
+  postgres:
+    image: postgres:16-bookworm
+    container_name: musicgpt-postgres
+    networks:
+      - musicgpt
+    ports:
+      # Host 6009 -> container 5432 (Postgres default inside the network).
+      - "6009:5432"
+    environment:
+      # Credentials and DB name used by the API's DATABASE_URL below.
+      POSTGRES_USER: musicgpt
+      POSTGRES_PASSWORD: musicgpt_local_dev
+      POSTGRES_DB: musicgpt
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U musicgpt -d musicgpt"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  redis:
+    image: redis:7-bookworm
+    container_name: musicgpt-redis
+    networks:
+      - musicgpt
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis_data:/data
+    ports:
+      # Host 7889 -> container 6379 (Redis default inside the network).
+      - "7889:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: musicgpt-api
+    networks:
+      - musicgpt
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    ports:
+      - "5001:5001"
+    environment:
+      # HTTP port inside the container (Nest listens on this).
+      PORT: "5001"
+
+      # Prisma + raw SQL seed script (same URL for both).
+      DATABASE_URL: "postgresql://musicgpt:musicgpt_local_dev@postgres:5432/musicgpt"
+
+      # BullMQ / ioredis: use service name + internal port (not 7889).
+      REDIS_HOST: redis
+      REDIS_PORT: "6379"
+      REDIS_DB: "0"
+      REDIS_PASSWORD: ""
+
+      # JWT settings (demo values only — replace in real deployments).
+      JWT_ACCESS_SECRET: "docker-compose-demo-access-secret-change-me-min-32-chars"
+      JWT_REFRESH_SECRET: "docker-compose-demo-refresh-secret-change-me-min-32-chars"
+      JWT_ACCESS_EXPIRATION: "15m"
+      JWT_REFRESH_EXPIRATION: "7d"
