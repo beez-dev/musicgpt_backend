@@ -11,7 +11,9 @@ import {
   ApiBearerAuth,
   ApiOkResponse,
   ApiOperation,
+  ApiServiceUnavailableResponse,
   ApiTags,
+  ApiTooManyRequestsResponse,
 } from '@nestjs/swagger';
 import { Request } from 'express';
 import { AuthService } from '../../../application/auth.service';
@@ -22,6 +24,7 @@ import { CurrentUser } from '../decorators/current-user.decorator';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 import { JwtRefreshGuard } from '../../guards/jwt-refresh.guard';
 import { RefreshRequestUser } from '../../../domain/types/refresh-request-user.type';
+import { SubscriptionRateLimitGuard } from '../../../../common/rate-limit/subscription-rate-limit.guard';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -52,9 +55,16 @@ export class AuthController {
   }
 
   @Post('logout')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, SubscriptionRateLimitGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiBearerAuth('access-token')
+  @ApiTooManyRequestsResponse({
+    description:
+      'Shared per-user per-minute budget exceeded (HTTP + socket handshake). See Retry-After.',
+  })
+  @ApiServiceUnavailableResponse({
+    description: 'Redis unavailable; requests denied (fail closed).',
+  })
   @ApiOperation({ summary: 'Invalidate stored refresh token' })
   async logout(@CurrentUser('id') userId: string) {
     await this.authService.logout(userId);

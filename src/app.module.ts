@@ -7,6 +7,7 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { PromptModule } from './prompt/prompt.module';
 import { SubscriptionModule } from './subscription/subscription.module';
+import { RateLimitModule } from './common/rate-limit/rate-limit.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { SubscriptionModule } from './subscription/subscription.module';
     PrismaModule,
     QueueModule,
     UserModule,
+    RateLimitModule,
     AuthModule,
     PromptModule,
     SubscriptionModule,

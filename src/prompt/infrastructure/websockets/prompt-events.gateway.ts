@@ -4,11 +4,12 @@ import {
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
-import { Logger } from '@nestjs/common';
+import { HttpException, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import type { Socket, Server } from 'socket.io';
 import { AccessTokenPayload } from '../../../auth/domain/types/access-token-payload.type';
+import { RateLimitService } from '../../../common/rate-limit/rate-limit.service';
 
 export type PromptCompletedPayload = {
   promptId: string;
@@ -28,6 +29,7 @@ export class PromptEventsGateway
   constructor(
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
+    private readonly rateLimitService: RateLimitService,
   ) {}
 
   private userRoom(userId: string) {
@@ -58,6 +60,18 @@ export class PromptEventsGateway
       );
 
       const userId = payload.id;
+
+      try {
+        // simpler implementation, could create a websocket specific guard
+        await this.rateLimitService.consumeSharedBudgetUnit(userId);
+      } catch (e) {
+        const detail =
+          e instanceof HttpException ? e.message : (e as Error).message;
+        this.logger.warn(`Socket shared rate limit: ${detail}`);
+        client.disconnect(true);
+        return;
+      }
+
       await client.join(this.userRoom(userId));
       this.logger.debug(`Socket joined room ${this.userRoom(userId)}`);
     } catch (e) {
