@@ -7,16 +7,19 @@ import {
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
+  ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
   ApiServiceUnavailableResponse,
   ApiTags,
   ApiTooManyRequestsResponse,
+  ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { SubscriptionService } from '../../application/subscription.service';
 import { JwtAuthGuard } from '../../../auth/infrastructure/guards/jwt-auth.guard';
 import { CurrentUser } from '../../../auth/infrastructure/interface/decorators/current-user.decorator';
 import { SubscriptionRateLimitGuard } from '../../../common/rate-limit/subscription-rate-limit.guard';
+import { HttpErrorResponseDto } from '../../../common/swagger/http-error-response.dto';
 import { SubscriptionStatusResponseDto } from '../dto/subscription-status-response.dto';
 
 @Controller('subscription')
@@ -28,15 +31,25 @@ export class SubscriptionController {
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard, SubscriptionRateLimitGuard)
   @ApiBearerAuth('access-token')
-  @ApiTooManyRequestsResponse({
+  @ApiOperation({
+    summary: 'Upgrade to PAID tier',
     description:
-      'Shared per-user per-minute budget exceeded (HTTP + socket handshake). See Retry-After.',
+      'Sets `subscriptionStatus` to **PAID** (higher BullMQ priority and higher shared per-minute request budget).',
+  })
+  @ApiOkResponse({ type: SubscriptionStatusResponseDto })
+  @ApiUnauthorizedResponse({ type: HttpErrorResponseDto })
+  @ApiNotFoundResponse({
+    description: 'User not found.',
+    type: HttpErrorResponseDto,
+  })
+  @ApiTooManyRequestsResponse({
+    description: 'Shared subscription rate limit exceeded.',
+    type: HttpErrorResponseDto,
   })
   @ApiServiceUnavailableResponse({
-    description: 'Redis unavailable; requests denied (fail closed).',
+    description: 'Redis unavailable.',
+    type: HttpErrorResponseDto,
   })
-  @ApiOperation({ summary: 'Set subscription to paid' })
-  @ApiOkResponse({ type: SubscriptionStatusResponseDto })
   subscribe(@CurrentUser('id') userId: string) {
     return this.subscriptionService.subscribe(userId);
   }
@@ -45,15 +58,25 @@ export class SubscriptionController {
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard, SubscriptionRateLimitGuard)
   @ApiBearerAuth('access-token')
-  @ApiTooManyRequestsResponse({
+  @ApiOperation({
+    summary: 'Downgrade to FREE tier',
     description:
-      'Shared per-user per-minute budget exceeded (HTTP + socket handshake). See Retry-After.',
+      'Sets `subscriptionStatus` to **FREE** (default BullMQ priority and lower shared per-minute budget).',
+  })
+  @ApiOkResponse({ type: SubscriptionStatusResponseDto })
+  @ApiUnauthorizedResponse({ type: HttpErrorResponseDto })
+  @ApiNotFoundResponse({
+    description: 'User not found.',
+    type: HttpErrorResponseDto,
+  })
+  @ApiTooManyRequestsResponse({
+    description: 'Shared subscription rate limit exceeded.',
+    type: HttpErrorResponseDto,
   })
   @ApiServiceUnavailableResponse({
-    description: 'Redis unavailable; requests denied (fail closed).',
+    description: 'Redis unavailable.',
+    type: HttpErrorResponseDto,
   })
-  @ApiOperation({ summary: 'Set subscription to free' })
-  @ApiOkResponse({ type: SubscriptionStatusResponseDto })
   cancel(@CurrentUser('id') userId: string) {
     return this.subscriptionService.cancel(userId);
   }

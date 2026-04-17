@@ -1,8 +1,16 @@
 import { Controller, Get, Query, UseGuards } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 import { JwtAuthGuard } from '../../../auth/infrastructure/guards/jwt-auth.guard';
 import { SearchService } from '../../application/search.service';
 import { SearchQueryDto } from '../dto/search-query.dto';
+import { HttpErrorResponseDto } from '../../../common/swagger/http-error-response.dto';
+import { UnifiedSearchResponseDto } from '../../../common/swagger/search.swagger.dto';
 
 @Controller('search')
 @ApiTags('search')
@@ -15,8 +23,10 @@ export class SearchController {
   @ApiOperation({
     summary: 'Unified search (users + audio)',
     description:
-      'Paged unified search: optional integer `users_offset` / `audio_offset` (rows to skip in each ranked list). Response `meta.next_offset` is the offset to pass on the next page, or null. Same `q` when advancing pages.',
+      'Ranked full-text style match over **users** (email, display name) and **audio** (title). Pagination is **per-list**: use `users_offset` / `audio_offset` and each section’s `meta.next_offset` (see global **Pagination** docs).',
   })
+  @ApiOkResponse({ type: UnifiedSearchResponseDto })
+  @ApiUnauthorizedResponse({ type: HttpErrorResponseDto })
   search(@Query() query: SearchQueryDto) {
     return this.searchService.search(query);
   }
