@@ -9,6 +9,7 @@ import { PromptModule } from './prompt/prompt.module';
 import { SubscriptionModule } from './subscription/subscription.module';
 import { RateLimitModule } from './common/rate-limit/rate-limit.module';
 import { AudioModule } from './audio/audio.module';
+import { SearchModule } from './search/search.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { AudioModule } from './audio/audio.module';
     PromptModule,
     SubscriptionModule,
     AudioModule,
+    SearchModule,
   ],
 })
 export class AppModule {}
